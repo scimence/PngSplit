@@ -98,6 +98,7 @@ namespace PngSplit
             pictureBox.Image = pic;             //设置当前使用的建筑块图像
         }
 
+        Boolean mute = false;
         private void 导出蒙板图像ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -113,7 +114,7 @@ namespace PngSplit
                 F.SaveToDirectory(pic[1], name + "_2.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 this.Text = ToolName; 
-                MessageBox.Show("成功导出蒙板！");
+                if(!mute) MessageBox.Show("成功导出蒙板！");
             }
             catch (Exception ex)
             { this.Text = ToolName; }
@@ -194,6 +195,21 @@ namespace PngSplit
         private void Form1_Load(object sender, EventArgs e)
         {
             F.SaveToFile(Properties.Resources.example, "example.png", false);
+        }
+
+        private void 全部导出蒙板ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int count = listBox.Items.Count;
+
+            for (int i = 0; i < count; i++ )
+            {
+                listBox.SelectedIndex = i;
+                mute = true;
+                导出蒙板图像ToolStripMenuItem_Click(null, null);
+            }
+
+            mute = false;
+            MessageBox.Show("成功导出蒙板！");
         }
         
     }

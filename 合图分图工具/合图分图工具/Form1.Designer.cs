@@ -33,17 +33,20 @@
             this.panel = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.导出所有子图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导出子图区域ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导出精简数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.导出遮罩图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导出图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加蒙板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.导出子图区域ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.导出精简数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.导出所有子图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBox = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.全部导出蒙板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel
@@ -83,6 +86,32 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(149, 142);
             // 
+            // 导出所有子图ToolStripMenuItem
+            // 
+            this.导出所有子图ToolStripMenuItem.Name = "导出所有子图ToolStripMenuItem";
+            this.导出所有子图ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.导出所有子图ToolStripMenuItem.Text = "导出所有子图";
+            this.导出所有子图ToolStripMenuItem.Click += new System.EventHandler(this.导出所有子图ToolStripMenuItem_Click);
+            // 
+            // 导出子图区域ToolStripMenuItem
+            // 
+            this.导出子图区域ToolStripMenuItem.Name = "导出子图区域ToolStripMenuItem";
+            this.导出子图区域ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.导出子图区域ToolStripMenuItem.Text = "导出子图区域";
+            this.导出子图区域ToolStripMenuItem.Click += new System.EventHandler(this.导出子图区域ToolStripMenuItem_Click);
+            // 
+            // 导出精简数据ToolStripMenuItem
+            // 
+            this.导出精简数据ToolStripMenuItem.Name = "导出精简数据ToolStripMenuItem";
+            this.导出精简数据ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.导出精简数据ToolStripMenuItem.Text = "导出精简数据";
+            this.导出精简数据ToolStripMenuItem.Click += new System.EventHandler(this.导出精简数据ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
+            // 
             // 导出遮罩图像ToolStripMenuItem
             // 
             this.导出遮罩图像ToolStripMenuItem.Name = "导出遮罩图像ToolStripMenuItem";
@@ -104,35 +133,10 @@
             this.添加蒙板ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.添加蒙板ToolStripMenuItem.Text = "添加蒙板";
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
-            // 
-            // 导出子图区域ToolStripMenuItem
-            // 
-            this.导出子图区域ToolStripMenuItem.Name = "导出子图区域ToolStripMenuItem";
-            this.导出子图区域ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.导出子图区域ToolStripMenuItem.Text = "导出子图区域";
-            this.导出子图区域ToolStripMenuItem.Click += new System.EventHandler(this.导出子图区域ToolStripMenuItem_Click);
-            // 
-            // 导出精简数据ToolStripMenuItem
-            // 
-            this.导出精简数据ToolStripMenuItem.Name = "导出精简数据ToolStripMenuItem";
-            this.导出精简数据ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.导出精简数据ToolStripMenuItem.Text = "导出精简数据";
-            this.导出精简数据ToolStripMenuItem.Click += new System.EventHandler(this.导出精简数据ToolStripMenuItem_Click);
-            // 
-            // 导出所有子图ToolStripMenuItem
-            // 
-            this.导出所有子图ToolStripMenuItem.Name = "导出所有子图ToolStripMenuItem";
-            this.导出所有子图ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.导出所有子图ToolStripMenuItem.Text = "导出所有子图";
-            this.导出所有子图ToolStripMenuItem.Click += new System.EventHandler(this.导出所有子图ToolStripMenuItem_Click);
-            // 
             // listBox
             // 
             this.listBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.listBox.ContextMenuStrip = this.contextMenuStrip2;
             this.listBox.FormattingEnabled = true;
             this.listBox.ItemHeight = 12;
             this.listBox.Location = new System.Drawing.Point(400, 0);
@@ -140,6 +144,20 @@
             this.listBox.Size = new System.Drawing.Size(120, 400);
             this.listBox.TabIndex = 86;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.全部导出蒙板ToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 26);
+            // 
+            // 全部导出蒙板ToolStripMenuItem
+            // 
+            this.全部导出蒙板ToolStripMenuItem.Name = "全部导出蒙板ToolStripMenuItem";
+            this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.全部导出蒙板ToolStripMenuItem.Text = "全部导出蒙板";
+            this.全部导出蒙板ToolStripMenuItem.Click += new System.EventHandler(this.全部导出蒙板ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -157,6 +175,7 @@
             this.panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -174,6 +193,8 @@
         private System.Windows.Forms.ToolStripMenuItem 导出子图区域ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 导出精简数据ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 导出所有子图ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem 全部导出蒙板ToolStripMenuItem;
     }
 }
 
