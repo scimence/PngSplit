@@ -644,5 +644,59 @@ namespace PngSplit
                     Colors[i][j] = false;
         }
 
+
+        //=======================================================
+        // png图像裁切，裁切掉图像中多余的空白区域
+        //=======================================================
+
+        /// <summary>
+        /// 获取图像pic的最小非透明像素矩形区域大小，自动剔除边缘透明区域
+        /// 原理： 记录所有非透明像素点的最小和最大坐标
+        /// </summary>
+        public Rectangle GetMiniRect(Bitmap pic)
+        {
+            Point P = new Point(-1, -1), Q = new Point(-1, -1);
+
+            bool[][] Colors = getColors(pic);           //获取图像对应的非透明像素点
+
+            for (int i = 0; i < pic.Height; i++)        //行遍历
+            {
+                for (int j = 0; j < pic.Width; j++)     //列遍历
+                {
+                    if (P.X != -1 && P.X <= i && i <= Q.X && P.Y <= j && j <= Q.Y) { j = Q.Y; continue; }  //跳过P与Q之间的列遍历
+                    if (Exist(Colors, i, j))
+                    {
+                        if (P.X == -1) { P = new Point(i, j); Q = new Point(i, j); }    //首个非透明像素点
+
+                        //最小区域左上点
+                        if (P.X > i) P.X = i;           //X记录行位置
+                        if (P.Y > j) P.Y = j;           //Y记录列位置
+
+                        //最小区域右下点
+                        if (Q.X < i) Q.X = i;
+                        if (Q.Y < j) Q.Y = j;
+                    }
+                }
+            }
+
+            if (P.X == -1) return new Rectangle(0, 0, 0, 0);
+            return new Rectangle(P.Y, P.X, Q.Y - P.Y, Q.X - P.X);
+        }
+
+        /// <summary>
+        /// 获取从左上点开始的图像pic的最小非透明像素矩形区域大小，仅剔除右侧或下侧边缘透明区域
+        /// 原理： 记录所有非透明像素点的最小和最大坐标
+        /// </summary>
+        public Rectangle GetMiniLeftRect(Bitmap pic)
+        {
+            Rectangle Rect = GetMiniRect(pic);  //获取最小非透明像素矩形区域
+
+            Rect.Width += Rect.X;               //转化为从左上点开始区域，仅剔除右下侧透明区域
+            Rect.Height += Rect.Y;
+            Rect.X = 0;
+            Rect.Y = 0;
+
+            return Rect;
+        }
     }
 }

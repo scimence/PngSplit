@@ -211,6 +211,77 @@ namespace PngSplit
             mute = false;
             MessageBox.Show("成功导出蒙板！");
         }
+
+        private void 左上尺寸裁剪ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clipPic(2);     //截取左上点开始的最小尺寸
+        }
+
+        private void 最适尺寸裁剪ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clipPic(1);     //截取最小尺寸
+        }
         
+        /// <summary>
+        /// 根据设定进行图像裁切
+        /// </summary>
+        private void clipPic(int i)
+        {
+            int index = listBox.SelectedIndex;
+            if (index == -1) return;
+            string name = System.IO.Path.GetFileName(buildsPicsName[index]);        //获取文件名
+
+            Bitmap pic = buildsPics[index];                 //获取图像
+            Rectangle Rect = new Rectangle();
+            if (i == 1) Rect = F.GetMiniRect(pic);          //获取图像pic的最小非透明像素矩形区域
+            else if (i == 2) Rect = F.GetMiniLeftRect(pic); //获取从左上点开始的图像pic的最小非透明像素矩形区域
+
+            pic = F.GetRect(pic, Rect);                     //截取pic中的指定区域Rect
+            F.SaveToDirectory(pic, name, (System.Drawing.Imaging.ImageFormat)null); //保存图像到文件
+
+            if (!mute) MessageBox.Show("图像裁切完成！");
+        }
+
+        private void 左上尺寸裁切ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clipPicAll(2);
+        }
+
+        private void 最适尺寸裁切ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clipPicAll(1);
+        }
+
+        /// <summary>
+        /// 根据设定进行图像裁切
+        /// </summary>
+        private void clipPicAll(int index)
+        {
+            int count = listBox.Items.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                listBox.SelectedIndex = i;
+                mute = true;
+                clipPic(index);
+            }
+
+            mute = false;
+            MessageBox.Show("所有图像裁切完成！");
+        }
+
+        /// <summary>
+        /// 打开工具界面
+        /// </summary>
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://git.oschina.net/scimence/PngSplit");
+
+            //创建新的进程，打开指定网页
+            //System.Diagnostics.Process process = new System.Diagnostics.Process();
+            //process.StartInfo.FileName = "iexplore.exe";            //IE浏览器，可以更换
+            //process.StartInfo.Arguments = "http://www.baidu.com";
+            //process.Start();
+        }
     }
 }
