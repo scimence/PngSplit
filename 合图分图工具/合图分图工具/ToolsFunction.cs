@@ -512,6 +512,10 @@ namespace PngSplit
 
         //判断所有像素点是否存在非透明像素
         public bool[][] getColors(Bitmap pic)
+        { return getColors(pic, 0); }
+
+        //判断所有像素点是否存在非透明像素,将颜色Trans视作透明像素点
+        public bool[][] getColors(Bitmap pic, int Trans)
         {
             Color C;
             bool[][] has = new bool[pic.Height][];
@@ -524,9 +528,11 @@ namespace PngSplit
                 {
                     C = pic.GetPixel(j, i);
 
+                    if (C.ToArgb() == Trans) { has[i][j] = false; continue; }
+
                     //统计RGB值近似为0的数目
                     count = 0;
-                    if(C.R < 4) count++;
+                    if (C.R < 4) count++;
                     if (C.G < 4) count++;
                     if (C.B < 4) count++;
 
@@ -649,15 +655,18 @@ namespace PngSplit
         // png图像裁切，裁切掉图像中多余的空白区域
         //=======================================================
 
+        public Rectangle GetMiniRect(Bitmap pic)
+        { return GetMiniRect(pic, 0); }
+
         /// <summary>
         /// 获取图像pic的最小非透明像素矩形区域大小，自动剔除边缘透明区域
         /// 原理： 记录所有非透明像素点的最小和最大坐标
         /// </summary>
-        public Rectangle GetMiniRect(Bitmap pic)
+        public Rectangle GetMiniRect(Bitmap pic, int Trans)
         {
             Point P = new Point(-1, -1), Q = new Point(-1, -1);
 
-            bool[][] Colors = getColors(pic);           //获取图像对应的非透明像素点
+            bool[][] Colors = getColors(pic, Trans);    //获取图像对应的非透明像素点
 
             for (int i = 0; i < pic.Height; i++)        //行遍历
             {
@@ -683,15 +692,18 @@ namespace PngSplit
             return new Rectangle(P.Y, P.X, Q.Y - P.Y, Q.X - P.X);
         }
 
+        public Rectangle GetMiniLeftRect(Bitmap pic)
+        { return GetMiniLeftRect(pic, 0); }
+
         /// <summary>
         /// 获取从左上点开始的图像pic的最小非透明像素矩形区域大小，仅剔除右侧或下侧边缘透明区域
         /// 原理： 记录所有非透明像素点的最小和最大坐标
         /// </summary>
-        public Rectangle GetMiniLeftRect(Bitmap pic)
+        public Rectangle GetMiniLeftRect(Bitmap pic, int Trans)
         {
-            Rectangle Rect = GetMiniRect(pic);  //获取最小非透明像素矩形区域
+            Rectangle Rect = GetMiniRect(pic, Trans);  //获取最小非透明像素矩形区域
 
-            Rect.Width += Rect.X;               //转化为从左上点开始区域，仅剔除右下侧透明区域
+            Rect.Width += Rect.X;                      //转化为从左上点开始区域，仅剔除右下侧透明区域
             Rect.Height += Rect.Y;
             Rect.X = 0;
             Rect.Y = 0;

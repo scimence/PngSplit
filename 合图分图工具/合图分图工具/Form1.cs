@@ -229,14 +229,18 @@ namespace PngSplit
         {
             int index = listBox.SelectedIndex;
             if (index == -1) return;
-            string name = System.IO.Path.GetFileName(buildsPicsName[index]);        //获取文件名
+            string name = System.IO.Path.GetFileName(buildsPicsName[index]);//获取文件名
+            string Ext = System.IO.Path.GetExtension(name).ToLower();       //获取拓展名
 
-            Bitmap pic = buildsPics[index];                 //获取图像
+            int C = 0;
+            if(Ext.Equals(".jpg") || Ext.Equals(".jpeg")) C = Color.White.ToArgb(); //jpg图像设置白色为透明色
+
+            Bitmap pic = buildsPics[index];                     //获取图像
             Rectangle Rect = new Rectangle();
-            if (i == 1) Rect = F.GetMiniRect(pic);          //获取图像pic的最小非透明像素矩形区域
-            else if (i == 2) Rect = F.GetMiniLeftRect(pic); //获取从左上点开始的图像pic的最小非透明像素矩形区域
+            if (i == 1) Rect = F.GetMiniRect(pic, C);           //获取图像pic的最小非透明像素矩形区域
+            else if (i == 2) Rect = F.GetMiniLeftRect(pic, C);  //获取从左上点开始的图像pic的最小非透明像素矩形区域
 
-            pic = F.GetRect(pic, Rect);                     //截取pic中的指定区域Rect
+            pic = F.GetRect(pic, Rect);                         //截取pic中的指定区域Rect
             F.SaveToDirectory(pic, name, (System.Drawing.Imaging.ImageFormat)null); //保存图像到文件
 
             if (!mute) MessageBox.Show("图像裁切完成！");
