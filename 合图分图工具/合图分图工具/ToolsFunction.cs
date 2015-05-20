@@ -162,9 +162,31 @@ namespace PngSplit
             //若不存在则创建
             if (!System.IO.File.Exists(fileName))
             {
-                if(format == null) pic.Save(fileName);
-                else pic.Save(fileName, format);    //按给定格式保存图像
+                if (format == null) format = getFormat(fileName);   //根据拓展名获取图像的对应存储类型
+
+                if (format == ImageFormat.MemoryBmp) pic.Save(fileName);
+                else pic.Save(fileName, format);                    //按给定格式保存图像
             }
+        }
+
+        //根据文件拓展名，获取对应的存储类型
+        public ImageFormat getFormat(string filePath)
+        {
+            ImageFormat format = ImageFormat.MemoryBmp;
+            String Ext = System.IO.Path.GetExtension(filePath).ToLower();
+
+            if(Ext.Equals(".png"))  format = ImageFormat.Png;
+            else if (Ext.Equals(".jpg") || Ext.Equals(".jpeg")) format = ImageFormat.Jpeg;
+            else if (Ext.Equals(".bmp")) format = ImageFormat.Bmp;
+            else if (Ext.Equals(".gif")) format = ImageFormat.Gif;
+            else if (Ext.Equals(".icon")) format = ImageFormat.Icon;
+            else if (Ext.Equals(".emf")) format = ImageFormat.Emf;
+            else if (Ext.Equals(".exif")) format = ImageFormat.Exif;
+            else if (Ext.Equals(".tiff")) format = ImageFormat.Tiff;
+            else if (Ext.Equals(".wmf")) format = ImageFormat.Wmf;
+            else if (Ext.Equals(".memorybmp")) format = ImageFormat.MemoryBmp;
+
+            return format;
         }
 
         //保存图像pic到子目录subDir中，保存名称为name
