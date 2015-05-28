@@ -15,10 +15,19 @@ namespace PngSplit
         //=======================================================
         //保存数据到文件
         //=======================================================
+
         /// <summary>
         /// 保存数据data到文件，返回值为保存的文件名
         /// </summary>
         public string SaveToFile(String data, String name, bool mute)
+        {
+            return SaveToFile(data, "", name, mute);
+        }
+
+        /// <summary>
+        /// 保存数据data到文件，返回值为保存的文件名,指定子目录名
+        /// </summary>
+        public string SaveToFile(String data, String subDir, String name, bool mute)
         {
             String filePath = "";
 
@@ -26,15 +35,15 @@ namespace PngSplit
             if (name == null || name.Trim().Equals("（重命名）") || name.Trim().Equals(""))
             {
                 name = DateTime.Now.ToLongTimeString().Replace(":", ".");   //使用系统时间自动为文件命名
-                filePath = SaveToFile(data, name, false);                   //保存数据到文件
+                filePath = SaveToFile(data, subDir, name, false);           //保存数据到文件
                 return filePath;                                            //返回保存的文件名
             }
 
             try
             {
-                filePath = SaveProcess(data, name);                         //保存数据并记录文件完整路径
+                filePath = SaveProcess(data, subDir, name);                 //保存数据并记录文件完整路径
 
-                if (!mute) MessageBox.Show("成功导出数据到:“" + filePath + "”!");
+                if (!mute) MessageWithOpen("成功导出数据!", filePath);
                 return filePath;
             }
             catch (Exception)
@@ -49,7 +58,15 @@ namespace PngSplit
         /// </summary>
         public String SaveProcess(String data, String name)
         {
-            string CurDir = System.AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Date.ToString("yyyy_MM_dd") + @"(PngSplit)导出\";         //设置当前目录
+            return SaveProcess(data, "", name);
+        }
+
+        /// <summary>
+        /// 保存数据data到文件处理过程，返回值为保存的文件名,指定子目录名
+        /// </summary>
+        public String SaveProcess(String data, String subDir, String name)
+        {
+            string CurDir = System.AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Date.ToString("yyyy_MM_dd") + @"(PngSplit)导出\" + subDir;         //设置当前目录
             if (!System.IO.Directory.Exists(CurDir)) System.IO.Directory.CreateDirectory(CurDir);   //该路径不存在时，在当前文件目录下创建文件夹"导出.."
 
             //不存在该文件时先创建
@@ -77,7 +94,7 @@ namespace PngSplit
                 file1.Close();                                                                  //关闭文件
                 file1.Dispose();                                                                //释放对象
 
-                if (!mute) MessageBox.Show("成功导出数据到:“" + filePathName + "”!");
+                if (!mute) this.MessageWithOpen("成功导出数据!", filePathName);
                 return filePathName;
             }
             catch (Exception)
@@ -190,22 +207,24 @@ namespace PngSplit
         }
 
         //保存图像pic到子目录subDir中，保存名称为name
-        public void SaveToDirectory(Image pic, string name, string subDir)
+        public String SaveToDirectory(Image pic, string name, string subDir)
         {
-            SaveToDirectory(pic, name, subDir, null);
+            return SaveToDirectory(pic, name, subDir, null);
         }
         //保存图像pic到子目录subDir中，保存名称为name
-        public void SaveToDirectory(Image pic, string name, ImageFormat format)
+        public String SaveToDirectory(Image pic, string name, ImageFormat format)
         { 
-            SaveToDirectory(pic, name, null, format); 
+            return SaveToDirectory(pic, name, null, format); 
         }
-        public void SaveToDirectory(Image pic, string name, string subDir, ImageFormat format)
+        public String SaveToDirectory(Image pic, string name, string subDir, ImageFormat format)
         {
             string CurDir = System.AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Date.ToString("yyyy_MM_dd") + @"(PngSplit)导出\" + (subDir != null ? (subDir + "\\") : "");         //设置当前目录
             if (!System.IO.Directory.Exists(CurDir)) System.IO.Directory.CreateDirectory(CurDir);   //该路径不存在时，在当前文件目录下创建文件夹"导出.."
 
             string fileName = CurDir + name;
             SaveToFile(pic, fileName, true, format);
+
+            return CurDir;
         }
 
         //=======================================================
@@ -229,15 +248,46 @@ namespace PngSplit
                     C = pic.GetPixel(j, i);                    //读取原图像的RGB值
                     C2 = mask.GetPixel(j, i);                  //读取蒙板的透明度信息
 
-                    //if (C2.R == 0) C = Color.FromArgb(0, 0, 0, 0);  // Color.Empty;
-                    if (C2.R == 0) C = Color.Transparent;
+                    if (C2.R == 0) C = Color.FromArgb(0, 0, 0, 0);  // Color.Empty;
                     else C = Color.FromArgb(C2.R, C.R, C.G, C.B);   //清除透明度信息
 
-                    pic.SetPixel(j, i, C);
+                    pic.SetPixel(j, i, C); 
                 }
             }
-            return pic;
 
+            return pic;
+        }
+
+        /// <summary>
+        /// 获取图像Pic的10进制颜色值
+        /// </summary>
+        public String getPixelsData(Image Pic)
+        {
+            return getPixelsData(Pic, 10);
+        }
+        /// <summary>
+        /// 获取图像Pic的颜色值，转化为toBase进制的串
+        /// </summary>
+        public String getPixelsData(Image Pic, int toBase)
+        {
+            if (Pic == null) return "";
+
+            Bitmap pic = ToBitmap(Pic);
+
+            StringBuilder str1 = new StringBuilder();
+
+            for (int i = 0; i < pic.Height; i++)
+            {
+                for (int j = 0; j < pic.Width; j++)
+                {
+                    int n = pic.GetPixel(j, i).ToArgb();  //读取原图像的ARGB值
+                    str1.Append(Convert.ToString(n, toBase) + (j < pic.Width - 1 ? "," : ""));
+                }
+                str1.Append(i < pic.Height - 1 ? "\r\n" : "");
+            }
+
+            return str1.ToString();
+            //SaveProcess(tmp, "colorT");
         }
 
         //=======================================================
@@ -266,7 +316,7 @@ namespace PngSplit
                 for (int j = 0; j < pic.Width; j++)
                 {
                     C = pic.GetPixel(j, i);
-                    C = Color.FromArgb(0, C.R, C.G, C.B);   //清除透明度信息
+                    C = C.A == 0 ? Color.FromArgb(0, 0, 0, 0) : Color.FromArgb(0, C.R, C.G, C.B);   //清除透明度信息
 
                     pic.SetPixel(j, i, C);
                 }
@@ -731,6 +781,20 @@ namespace PngSplit
             Rect.Y = 0;
 
             return Rect;
+        }
+
+
+        //=======================================================
+        // 提示信息
+        //=======================================================
+
+        /// <summary>
+        /// 显示提示信息str,并选择是否打开文件目录Dir
+        /// </summary>
+        public void MessageWithOpen(String str, String Dir)
+        {
+            bool ok = (MessageBox.Show(str, "打开？", MessageBoxButtons.OKCancel) == DialogResult.OK);
+            if (ok) System.Diagnostics.Process.Start("explorer.exe", "/e,/select, " + Dir);
         }
     }
 }
