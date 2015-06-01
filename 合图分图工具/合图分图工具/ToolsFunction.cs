@@ -122,31 +122,61 @@ namespace PngSplit
         /// </summary>
         public string dragDrop(DragEventArgs e)
         {
-            string filesName = "";
+            StringBuilder filesName = new StringBuilder("");
             Array file = (System.Array)e.Data.GetData(DataFormats.FileDrop);//将拖来的数据转化为数组存储
 
-            //判断是否为目录，从目录载入文件
-            if (file.Length == 1)
+            foreach (object I in file)
             {
-                string str = file.GetValue(0).ToString();
-                if (!System.IO.File.Exists(str) && System.IO.Directory.Exists(str)) //拖入的不是文件，是文件夹
-                {
-                    string[] files = System.IO.Directory.GetFiles(str);
-                    for (int i = 0; i < files.Length; i++)
-                        filesName += (files[i] + (i == files.Length - 1 ? "" : ";"));
+                string str = I.ToString();
 
-                    return filesName;
+                System.IO.FileInfo info = new System.IO.FileInfo(str);
+                if ((info.Attributes & System.IO.FileAttributes.Directory) != 0)
+
+                //若为目录，则获取目录下所有子文件名
+                //if (System.IO.Directory.Exists(str))
+                {
+                    str = getAllFiles(str);
+                    if (!str.Equals("")) filesName.Append((filesName.Length == 0 ? "" : ";") + str);
+                }
+                //若为文件，则获取文件名
+                else if (System.IO.File.Exists(str))
+                    filesName.Append((filesName.Length == 0 ? "" : ";") + str);
+            }
+
+            return filesName.ToString();
+        }
+
+        /// <summary>
+        /// 判断path是否为目录
+        /// </summary>
+        public bool IsDirectory(String path)
+        {
+            System.IO.FileInfo info = new System.IO.FileInfo(path);
+            return (info.Attributes & System.IO.FileAttributes.Directory) != 0;
+        }
+
+        /// <summary>
+        /// 获取目录path下所有子文件名
+        /// </summary>
+        public string getAllFiles(String path)
+        {
+            StringBuilder str = new StringBuilder("");
+            if (System.IO.Directory.Exists(path))
+            {
+                //所有子文件名
+                string[] files = System.IO.Directory.GetFiles(path);        
+                foreach (string file in files)
+                    str.Append((str.Length == 0 ? "" : ";") + file);
+
+                //所有子目录名
+                string[] Dirs = System.IO.Directory.GetDirectories(path);   
+                foreach (string dir in Dirs)
+                {
+                    string tmp = getAllFiles(dir);  //子目录下所有子文件名
+                    if (!tmp.Equals("")) str.Append((str.Length == 0 ? "" : ";") + tmp);
                 }
             }
-
-            //拖入的所有文件
-            int len = file.Length;
-            for (int i = 0; i < len; i++)
-            {
-                filesName += (file.GetValue(i).ToString() + (i == file.Length - 1 ? "" : ";"));
-            }
-
-            return filesName;
+            return str.ToString();
         }
 
         //=======================================================
@@ -223,6 +253,17 @@ namespace PngSplit
 
             string fileName = CurDir + name;
             SaveToFile(pic, fileName, true, format);
+
+            return CurDir;
+        }
+
+        /// <summary>
+        /// 获取工具的默认路径
+        /// </summary>
+        public String getCurDir(string subDir)
+        {
+            string CurDir = System.AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Date.ToString("yyyy_MM_dd") + @"(PngSplit)导出\" + (subDir != null ? (subDir + "\\") : "");         //设置当前目录
+            if (!System.IO.Directory.Exists(CurDir)) System.IO.Directory.CreateDirectory(CurDir);   //该路径不存在时，在当前文件目录下创建文件夹"导出.."
 
             return CurDir;
         }

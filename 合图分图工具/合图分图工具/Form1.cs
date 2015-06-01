@@ -124,7 +124,7 @@ namespace PngSplit
 
         private void 导出图像ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (picTmp == null) MessageBox.Show("请先拖入一个图像文件，再进行操作！");
+            if (picTmp == null) MessageBox.Show("请先拖入蒙板图像_1.jpeg");
             else
             {
                 try
@@ -332,7 +332,7 @@ namespace PngSplit
         private void 添加蒙板ToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             bool select = 添加蒙板ToolStripMenuItem.Checked;
-            this.Text = ToolName + (select ? " 请拖入当前图像的蒙板..." : "");
+            this.Text = ToolName + (select ? " 请拖入当前图像的蒙板 *_2.jpeg ..." : "");
         }
 
         private void 合并蒙板图像ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -382,6 +382,79 @@ namespace PngSplit
             
             return Dir;
         }
+
+        private void 提取较小资源ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            Dictionary<string, string> dic_1 = new Dictionary<string, string>();
+            Dictionary<string, string> dic_2 = new Dictionary<string, string>();
+            List<String> list = new List<string>();
+
+            //资源按文件名分类存储
+            foreach (string file in picFiles)
+            {
+                string name = System.IO.Path.GetFileName(file);
+                if(name.EndsWith("_1.jpeg") || name.EndsWith("_2.jpeg")) 
+                    name = name.Remove(name.LastIndexOf("_"));
+                else name = System.IO.Path.GetFileNameWithoutExtension(name);
+
+                if(file.EndsWith("_1.jpeg")) dic_1.Add(name, file);
+                else if(file.EndsWith("_2.jpeg")) dic_2.Add(name, file);
+                else dic.Add(name, file);
+            }
+
+            //保留较小资源（原图像、蒙板图像）
+            while (dic.Count > 0)
+            {
+                KeyValuePair<string, string> iteam = dic.ElementAt(0);
+                if(dic_1.ContainsKey(iteam.Key) && dic_2.ContainsKey(iteam.Key))
+                {
+                    long len = new System.IO.FileInfo(iteam.Value).Length;
+                    long len_1 = new System.IO.FileInfo(dic_1[iteam.Key]).Length;
+                    long len_2 = new System.IO.FileInfo(dic_2[iteam.Key]).Length;
+
+                    if(len <= len_1 + len_2) list.Add(iteam.Value);
+                    else
+                    {
+                        list.Add(dic_1[iteam.Key]);
+                        list.Add(dic_2[iteam.Key]);
+                    }
+                }
+                else list.Add(iteam.Value);
+
+                dic.Remove(iteam.Key);
+                if(dic_1.ContainsKey(iteam.Key)) dic_1.Remove(iteam.Key);
+                if(dic_2.ContainsKey(iteam.Key)) dic_2.Remove(iteam.Key);
+            }
+
+            //其他资源
+            while (dic_1.Count > 0)
+            {
+                KeyValuePair<string, string> iteam = dic_1.ElementAt(0);
+                list.Add(iteam.Value);
+                dic_1.Remove(iteam.Key);
+            }
+
+            while (dic_2.Count > 0)
+            {
+                KeyValuePair<string, string> iteam = dic_2.ElementAt(0);
+                list.Add(iteam.Value);
+                dic_2.Remove(iteam.Key);
+            }
+
+            //复制较小图像资源
+            while(list.Count > 0)
+            {
+                string file = list.ElementAt(0);
+                string name = System.IO.Path.GetFileName(file);
+                System.IO.File.Copy(file, F.getCurDir("较小图像资源") + name, true);
+
+                list.RemoveAt(0);
+            }
+
+            F.MessageWithOpen("成功合并所有蒙板图像！", F.getCurDir("较小图像资源"));
+        }
+
 
     }
 }

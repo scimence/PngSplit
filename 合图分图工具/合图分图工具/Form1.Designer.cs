@@ -53,6 +53,7 @@
             this.最适尺寸裁切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.合并蒙板图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.提取较小资源ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -108,6 +109,7 @@
             this.导出所有子图ToolStripMenuItem.Name = "导出所有子图ToolStripMenuItem";
             this.导出所有子图ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出所有子图ToolStripMenuItem.Text = "导出所有子图";
+            this.导出所有子图ToolStripMenuItem.ToolTipText = "将当前png合图图像，按透明像素，\r\n自动分割为若个子图(TexturePacker逆处理)";
             this.导出所有子图ToolStripMenuItem.Click += new System.EventHandler(this.导出所有子图ToolStripMenuItem_Click);
             // 
             // 导出子图区域ToolStripMenuItem
@@ -115,6 +117,7 @@
             this.导出子图区域ToolStripMenuItem.Name = "导出子图区域ToolStripMenuItem";
             this.导出子图区域ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出子图区域ToolStripMenuItem.Text = "导出子图区域";
+            this.导出子图区域ToolStripMenuItem.ToolTipText = "将当前png合图图像，按透明像素，自动分割为若个子图，\r\n导出各子区域的区域信息为文本";
             this.导出子图区域ToolStripMenuItem.Click += new System.EventHandler(this.导出子图区域ToolStripMenuItem_Click);
             // 
             // 导出精简数据ToolStripMenuItem
@@ -122,6 +125,7 @@
             this.导出精简数据ToolStripMenuItem.Name = "导出精简数据ToolStripMenuItem";
             this.导出精简数据ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出精简数据ToolStripMenuItem.Text = "导出精简数据";
+            this.导出精简数据ToolStripMenuItem.ToolTipText = "将当前png合图图像，按透明像素，自动分割为若个子图，\r\n导出各子区域的区域精简信息为文本";
             this.导出精简数据ToolStripMenuItem.Click += new System.EventHandler(this.导出精简数据ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -134,6 +138,7 @@
             this.导出遮罩图像ToolStripMenuItem.Name = "导出遮罩图像ToolStripMenuItem";
             this.导出遮罩图像ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出遮罩图像ToolStripMenuItem.Text = "导出蒙板";
+            this.导出遮罩图像ToolStripMenuItem.ToolTipText = "将当前包含透明度信息的图像，分解为两张jpeg蒙板图像";
             this.导出遮罩图像ToolStripMenuItem.Click += new System.EventHandler(this.导出蒙板图像ToolStripMenuItem_Click);
             // 
             // 导出图像ToolStripMenuItem
@@ -141,6 +146,7 @@
             this.导出图像ToolStripMenuItem.Name = "导出图像ToolStripMenuItem";
             this.导出图像ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出图像ToolStripMenuItem.Text = "导出图像";
+            this.导出图像ToolStripMenuItem.ToolTipText = "为蒙板图像_1.jpeg添加蒙板_2.jpeg后，\r\n导出合成的png图像";
             this.导出图像ToolStripMenuItem.Click += new System.EventHandler(this.导出图像ToolStripMenuItem_Click);
             // 
             // 添加蒙板ToolStripMenuItem
@@ -149,6 +155,7 @@
             this.添加蒙板ToolStripMenuItem.Name = "添加蒙板ToolStripMenuItem";
             this.添加蒙板ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.添加蒙板ToolStripMenuItem.Text = "添加蒙板";
+            this.添加蒙板ToolStripMenuItem.ToolTipText = "拖入蒙板图像_1.jpeg -> 添加蒙板 -> 拖入蒙板图像_2.jpeg";
             this.添加蒙板ToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.添加蒙板ToolStripMenuItem_CheckStateChanged);
             // 
             // toolStripSeparator1
@@ -161,6 +168,7 @@
             this.左上尺寸裁剪ToolStripMenuItem.Name = "左上尺寸裁剪ToolStripMenuItem";
             this.左上尺寸裁剪ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.左上尺寸裁剪ToolStripMenuItem.Text = "左上尺寸裁剪";
+            this.左上尺寸裁剪ToolStripMenuItem.ToolTipText = "从左上点开始，对当前图像进行裁切，\r\n裁切掉图像右下侧多余的透明像素区域";
             this.左上尺寸裁剪ToolStripMenuItem.Click += new System.EventHandler(this.左上尺寸裁剪ToolStripMenuItem_Click);
             // 
             // 最适尺寸裁剪ToolStripMenuItem
@@ -168,6 +176,7 @@
             this.最适尺寸裁剪ToolStripMenuItem.Name = "最适尺寸裁剪ToolStripMenuItem";
             this.最适尺寸裁剪ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.最适尺寸裁剪ToolStripMenuItem.Text = "最适尺寸裁剪";
+            this.最适尺寸裁剪ToolStripMenuItem.ToolTipText = "对当前图像进行裁切，仅保留有效像素区域\r\n裁切掉图像四周多余的透明像素区域";
             this.最适尺寸裁剪ToolStripMenuItem.Click += new System.EventHandler(this.最适尺寸裁剪ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
@@ -180,6 +189,7 @@
             this.导出10进制颜色值ToolStripMenuItem.Name = "导出10进制颜色值ToolStripMenuItem";
             this.导出10进制颜色值ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出10进制颜色值ToolStripMenuItem.Text = "导出10进制颜色值";
+            this.导出10进制颜色值ToolStripMenuItem.ToolTipText = "导出当前图像的所有像素值，为10进制ARGB串";
             this.导出10进制颜色值ToolStripMenuItem.Click += new System.EventHandler(this.导出10进制颜色值ToolStripMenuItem_Click);
             // 
             // 导出16进制颜色值ToolStripMenuItem
@@ -187,6 +197,7 @@
             this.导出16进制颜色值ToolStripMenuItem.Name = "导出16进制颜色值ToolStripMenuItem";
             this.导出16进制颜色值ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.导出16进制颜色值ToolStripMenuItem.Text = "导出16进制颜色值";
+            this.导出16进制颜色值ToolStripMenuItem.ToolTipText = "导出当前图像的所有像素值，为16进制ARGB串";
             this.导出16进制颜色值ToolStripMenuItem.Click += new System.EventHandler(this.导出16进制颜色值ToolStripMenuItem_Click);
             // 
             // listBox
@@ -208,15 +219,17 @@
             this.左上尺寸裁切ToolStripMenuItem,
             this.最适尺寸裁切ToolStripMenuItem,
             this.toolStripSeparator4,
-            this.合并蒙板图像ToolStripMenuItem});
+            this.合并蒙板图像ToolStripMenuItem,
+            this.提取较小资源ToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(153, 120);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(153, 142);
             // 
             // 全部导出蒙板ToolStripMenuItem
             // 
             this.全部导出蒙板ToolStripMenuItem.Name = "全部导出蒙板ToolStripMenuItem";
             this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.全部导出蒙板ToolStripMenuItem.Text = "全部导出蒙板";
+            this.全部导出蒙板ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行导出蒙板操作";
             this.全部导出蒙板ToolStripMenuItem.Click += new System.EventHandler(this.全部导出蒙板ToolStripMenuItem_Click);
             // 
             // 左上尺寸裁切ToolStripMenuItem
@@ -224,6 +237,7 @@
             this.左上尺寸裁切ToolStripMenuItem.Name = "左上尺寸裁切ToolStripMenuItem";
             this.左上尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.左上尺寸裁切ToolStripMenuItem.Text = "左上尺寸裁切";
+            this.左上尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行左上尺寸裁切";
             this.左上尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.左上尺寸裁切ToolStripMenuItem_Click);
             // 
             // 最适尺寸裁切ToolStripMenuItem
@@ -231,6 +245,7 @@
             this.最适尺寸裁切ToolStripMenuItem.Name = "最适尺寸裁切ToolStripMenuItem";
             this.最适尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.最适尺寸裁切ToolStripMenuItem.Text = "最适尺寸裁切";
+            this.最适尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行最适寸裁切";
             this.最适尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.最适尺寸裁切ToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
@@ -243,7 +258,16 @@
             this.合并蒙板图像ToolStripMenuItem.Name = "合并蒙板图像ToolStripMenuItem";
             this.合并蒙板图像ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.合并蒙板图像ToolStripMenuItem.Text = "合并蒙板图像";
+            this.合并蒙板图像ToolStripMenuItem.ToolTipText = "在当前拖入的所有图像资源中，搜索是否为导出蒙板图像，\r\n是则合并2张jpeg蒙板图像，为1张新的png图像";
             this.合并蒙板图像ToolStripMenuItem.Click += new System.EventHandler(this.合并蒙板图像ToolStripMenuItem_Click);
+            // 
+            // 提取较小资源ToolStripMenuItem
+            // 
+            this.提取较小资源ToolStripMenuItem.Name = "提取较小资源ToolStripMenuItem";
+            this.提取较小资源ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.提取较小资源ToolStripMenuItem.Text = "提取较小资源";
+            this.提取较小资源ToolStripMenuItem.ToolTipText = "自动对比当前拖入的所有图像资源中的 （蒙板图像 和 原图像）的大小，\r\n复制二者中较小的资源";
+            this.提取较小资源ToolStripMenuItem.Click += new System.EventHandler(this.提取较小资源ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -291,6 +315,7 @@
         private System.Windows.Forms.ToolStripMenuItem 导出16进制颜色值ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem 合并蒙板图像ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 提取较小资源ToolStripMenuItem;
     }
 }
 
