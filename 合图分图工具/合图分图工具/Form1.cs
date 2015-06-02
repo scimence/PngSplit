@@ -439,7 +439,7 @@ namespace PngSplit
                 {
                     long len = new System.IO.FileInfo(iteam.Value).Length;
                     long len_1 = new System.IO.FileInfo(dic_1[iteam.Key]).Length;
-                    long len_2 = isPng ? 0 : new System.IO.FileInfo(dic_2[iteam.Key]).Length;
+                    long len_2 = !isPng ? 0 : new System.IO.FileInfo(dic_2[iteam.Key]).Length;
 
                     //原图像较小
                     if (len <= len_1 + len_2) list.Add(iteam.Value); 
