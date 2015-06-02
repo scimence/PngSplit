@@ -15,7 +15,6 @@ namespace PngSplit
 
         ToolsFunction F = new ToolsFunction();  //图像处理相关函数工具
         string[] buildsPicsName;    //各建筑块名称
-        Bitmap[] buildsPics;        //各建筑块的对应图像
         string[] picFiles;          //各建筑块的文件名
 
         Bitmap picTmp;              //临时存储程序运行过程中处理的图像
@@ -52,12 +51,11 @@ namespace PngSplit
                     if (index == -1) return;
                     this.Text = ToolName + "使用蒙板处理图像中...";
 
-                    Image pic = buildsPics[index];             //待添加蒙板的图像
+                    Image pic = buildsPics(index);             //待添加蒙板的图像
                     Image mask = Bitmap.FromFile(picFiles[0]); //蒙板图像
 
                     picTmp = F.setPicMask(pic, mask);          //添加蒙板到图像上
                     pictureBox.Image = picTmp;                 //临时保存图像
-                    buildsPics[index] = picTmp;                //记录添加蒙板后的图像
 
                     添加蒙板ToolStripMenuItem.Checked = false; //添加蒙板完成，清除标识
                     this.Text = ToolName;
@@ -70,14 +68,11 @@ namespace PngSplit
             {
                 //获取拖入的建筑块信息
                 buildsPicsName = new string[picFiles.Length];
-                buildsPics = new Bitmap[picFiles.Length];
 
                 listBox.Items.Clear();
                 for (int i = 0; i < picFiles.Length; i++)
                 {
                     buildsPicsName[i] = System.IO.Path.GetFileName(picFiles[i]);    //获取文件名
-                    buildsPics[i] = F.ToBitmap(Bitmap.FromFile(picFiles[i]));       //获取图像
-
                     listBox.Items.Add(buildsPicsName[i]);   //添加图像名到列表中
                 }
 
@@ -85,11 +80,16 @@ namespace PngSplit
             }
         }
 
+        private Bitmap buildsPics(int index)
+        {
+            return F.ToBitmap(Bitmap.FromFile(picFiles[index])); 
+        }
+
         //显示列表中对应的图像
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = listBox.SelectedIndex;  //选择的建筑块图像
-            Bitmap pic = buildsPics[index];
+            Bitmap pic = buildsPics(index);
 
             //设置图像的显示样式，大图像拉伸显示、小图像居中显示
             if (pic.Width > pictureBox.Width || pic.Height > pictureBox.Height)
@@ -109,7 +109,7 @@ namespace PngSplit
                 string name = System.IO.Path.GetFileNameWithoutExtension(buildsPicsName[index]);  //获取文件名
                 this.Text = ToolName + "蒙板图像生成中...";
 
-                Bitmap[] pic = F.getPicMask(buildsPics[index]);
+                Bitmap[] pic = F.getPicMask(buildsPics(index));
 
                 String subDir = "导出蒙板";
                 F.SaveToDirectory(pic[0], name + "_1.jpeg", subDir, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -152,7 +152,7 @@ namespace PngSplit
         {
             int index = listBox.SelectedIndex;
             if (index == -1) return;
-            Rectangle[]buildRects = F.GetRects(buildsPics[index]);      //获取图像的子图区域
+            Rectangle[]buildRects = F.GetRects(buildsPics(index));      //获取图像的子图区域
 
             string str = "";
             for (int i = 0; i < buildRects.Length; i++)
@@ -166,7 +166,7 @@ namespace PngSplit
         {
             int index = listBox.SelectedIndex;
             if (index == -1) return;
-            Rectangle[] buildRects = F.GetRects(buildsPics[index]);     //获取图像的子图区域
+            Rectangle[] buildRects = F.GetRects(buildsPics(index));     //获取图像的子图区域
 
             string str = "";
             string str2 = "";
@@ -184,12 +184,12 @@ namespace PngSplit
         {
             int index = listBox.SelectedIndex;
             if (index == -1) return;
-            Rectangle[] buildRects = F.GetRects(buildsPics[index]);           //获取图像的子图区域
+            Rectangle[] buildRects = F.GetRects(buildsPics(index));           //获取图像的子图区域
 
             //图像的所有子图图像
             Bitmap[] SubPics = new Bitmap[buildRects.Length];
             for (int i = 0; i < buildRects.Length; i++)
-                SubPics[i] = F.GetRect(buildsPics[index], buildRects[i]);     //获取所有子图图像
+                SubPics[i] = F.GetRect(buildsPics(index), buildRects[i]);     //获取所有子图图像
 
             string directory = "子图_" + buildsPicsName[index].Replace(".", "_");
             string Dir = "";
@@ -240,7 +240,7 @@ namespace PngSplit
             int C = 0;
             if(Ext.Equals(".jpg") || Ext.Equals(".jpeg")) C = Color.White.ToArgb(); //jpg图像设置白色为透明色
 
-            Bitmap pic = buildsPics[index];                     //获取图像
+            Bitmap pic = buildsPics(index);                     //获取图像
             Rectangle Rect = new Rectangle();
             if (i == 1) Rect = F.GetMiniRect(pic, C);           //获取图像pic的最小非透明像素矩形区域
             else if (i == 2) Rect = F.GetMiniLeftRect(pic, C);  //获取从左上点开始的图像pic的最小非透明像素矩形区域
@@ -305,7 +305,7 @@ namespace PngSplit
             int index = listBox.SelectedIndex;
             if (index == -1) return;
 
-            Bitmap pic = buildsPics[index];                 //获取图像
+            Bitmap pic = buildsPics(index);                 //获取图像
             string picName = System.IO.Path.GetFileName(buildsPicsName[index]);  //获取文件名
             this.Text = ToolName + "图像" + picName + ",像素数据导出中...";
 
@@ -385,21 +385,47 @@ namespace PngSplit
 
         private void 提取较小资源ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //获取(原图像 和 蒙板图像)较小文件，形成列表
+            List<string>[] List = getMiniCopyList();
+
+            //复制图像资源
+            for (int i = 0; i < List.Length; i++)
+            {
+                while (List[i].Count > 0)
+                {
+                    string file = List[i].ElementAt(0);
+                    string name = System.IO.Path.GetFileName(file);
+
+                    if (i == 1) name = name.Remove(name.LastIndexOf("_")) + ".jpg";
+                    System.IO.File.Copy(file, F.getCurDir("较小图像资源") + name, true);
+                    List[i].RemoveAt(0);
+                }
+            }
+
+            F.MessageWithOpen("成功提取较小图像资源！", F.getCurDir("较小图像资源"));
+        }
+
+        /// <summary>
+        /// 在当前载入的所有图像中，比较原图和其对应的蒙板图像的大小，保留较小的文件名到list中
+        /// </summary>
+        private List<string>[] getMiniCopyList()
+        {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             Dictionary<string, string> dic_1 = new Dictionary<string, string>();
             Dictionary<string, string> dic_2 = new Dictionary<string, string>();
-            List<String> list = new List<string>();
+            List<String> list = new List<string>();     //待复制的原图像或png蒙板图像
+            List<String> list_1 = new List<string>();     //待复制的原图像或png蒙板图像
 
             //资源按文件名分类存储
             foreach (string file in picFiles)
             {
                 string name = System.IO.Path.GetFileName(file);
-                if(name.EndsWith("_1.jpeg") || name.EndsWith("_2.jpeg")) 
+                if (name.EndsWith("_1.jpeg") || name.EndsWith("_2.jpeg"))
                     name = name.Remove(name.LastIndexOf("_"));
                 else name = System.IO.Path.GetFileNameWithoutExtension(name);
 
-                if(file.EndsWith("_1.jpeg")) dic_1.Add(name, file);
-                else if(file.EndsWith("_2.jpeg")) dic_2.Add(name, file);
+                if (file.EndsWith("_1.jpeg")) dic_1.Add(name, file);
+                else if (file.EndsWith("_2.jpeg")) dic_2.Add(name, file);
                 else dic.Add(name, file);
             }
 
@@ -407,24 +433,33 @@ namespace PngSplit
             while (dic.Count > 0)
             {
                 KeyValuePair<string, string> iteam = dic.ElementAt(0);
-                if(dic_1.ContainsKey(iteam.Key) && dic_2.ContainsKey(iteam.Key))
+
+                Boolean isPng = iteam.Value.EndsWith(".png");
+                if (dic_1.ContainsKey(iteam.Key) && dic_2.ContainsKey(iteam.Key))   //png图像，比较大小，复制值原图或蒙板图像
                 {
                     long len = new System.IO.FileInfo(iteam.Value).Length;
                     long len_1 = new System.IO.FileInfo(dic_1[iteam.Key]).Length;
-                    long len_2 = new System.IO.FileInfo(dic_2[iteam.Key]).Length;
+                    long len_2 = isPng ? 0 : new System.IO.FileInfo(dic_2[iteam.Key]).Length;
 
-                    if(len <= len_1 + len_2) list.Add(iteam.Value);
+                    //原图像较小
+                    if (len <= len_1 + len_2) list.Add(iteam.Value); 
                     else
                     {
-                        list.Add(dic_1[iteam.Key]);
-                        list.Add(dic_2[iteam.Key]);
+                        //png图像，复制其对应的两张蒙板图像
+                        if (isPng)  
+                        {
+                            list.Add(dic_1[iteam.Key]);
+                            list.Add(dic_2[iteam.Key]);
+                        }
+                        //其他图像，近复制蒙板图像_1.jpeg
+                        else list_1.Add(dic_1[iteam.Key]);
                     }
                 }
                 else list.Add(iteam.Value);
 
                 dic.Remove(iteam.Key);
-                if(dic_1.ContainsKey(iteam.Key)) dic_1.Remove(iteam.Key);
-                if(dic_2.ContainsKey(iteam.Key)) dic_2.Remove(iteam.Key);
+                if (dic_1.ContainsKey(iteam.Key)) dic_1.Remove(iteam.Key);
+                if (dic_2.ContainsKey(iteam.Key)) dic_2.Remove(iteam.Key);
             }
 
             //其他资源
@@ -442,19 +477,8 @@ namespace PngSplit
                 dic_2.Remove(iteam.Key);
             }
 
-            //复制较小图像资源
-            while(list.Count > 0)
-            {
-                string file = list.ElementAt(0);
-                string name = System.IO.Path.GetFileName(file);
-                System.IO.File.Copy(file, F.getCurDir("较小图像资源") + name, true);
-
-                list.RemoveAt(0);
-            }
-
-            F.MessageWithOpen("成功合并所有蒙板图像！", F.getCurDir("较小图像资源"));
+            return new List<string>[]{ list, list_1 };
         }
-
 
     }
 }

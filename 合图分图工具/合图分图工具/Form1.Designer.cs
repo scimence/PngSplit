@@ -31,6 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel = new System.Windows.Forms.Panel();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.全部导出蒙板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.左上尺寸裁切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.最适尺寸裁切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.合并蒙板图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.提取较小资源ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.导出所有子图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,30 +54,92 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.导出10进制颜色值ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导出16进制颜色值ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listBox = new System.Windows.Forms.ListBox();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.全部导出蒙板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.左上尺寸裁切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.最适尺寸裁切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.合并蒙板图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.提取较小资源ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel
             // 
             this.panel.AllowDrop = true;
+            this.panel.Controls.Add(this.listBox);
             this.panel.Controls.Add(this.pictureBox);
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(400, 400);
+            this.panel.Size = new System.Drawing.Size(519, 400);
             this.panel.TabIndex = 85;
             this.panel.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel_DragDrop);
             this.panel.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel_DragEnter);
+            // 
+            // listBox
+            // 
+            this.listBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.listBox.ContextMenuStrip = this.contextMenuStrip2;
+            this.listBox.FormattingEnabled = true;
+            this.listBox.ItemHeight = 12;
+            this.listBox.Location = new System.Drawing.Point(400, 0);
+            this.listBox.Name = "listBox";
+            this.listBox.Size = new System.Drawing.Size(120, 400);
+            this.listBox.TabIndex = 87;
+            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.全部导出蒙板ToolStripMenuItem,
+            this.左上尺寸裁切ToolStripMenuItem,
+            this.最适尺寸裁切ToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.合并蒙板图像ToolStripMenuItem,
+            this.提取较小资源ToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 120);
+            // 
+            // 全部导出蒙板ToolStripMenuItem
+            // 
+            this.全部导出蒙板ToolStripMenuItem.Name = "全部导出蒙板ToolStripMenuItem";
+            this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.全部导出蒙板ToolStripMenuItem.Text = "全部导出蒙板";
+            this.全部导出蒙板ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行导出蒙板操作";
+            this.全部导出蒙板ToolStripMenuItem.Click += new System.EventHandler(this.全部导出蒙板ToolStripMenuItem_Click);
+            // 
+            // 左上尺寸裁切ToolStripMenuItem
+            // 
+            this.左上尺寸裁切ToolStripMenuItem.Name = "左上尺寸裁切ToolStripMenuItem";
+            this.左上尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.左上尺寸裁切ToolStripMenuItem.Text = "左上尺寸裁切";
+            this.左上尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行左上尺寸裁切";
+            this.左上尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.左上尺寸裁切ToolStripMenuItem_Click);
+            // 
+            // 最适尺寸裁切ToolStripMenuItem
+            // 
+            this.最适尺寸裁切ToolStripMenuItem.Name = "最适尺寸裁切ToolStripMenuItem";
+            this.最适尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.最适尺寸裁切ToolStripMenuItem.Text = "最适尺寸裁切";
+            this.最适尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行最适寸裁切";
+            this.最适尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.最适尺寸裁切ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
+            // 
+            // 合并蒙板图像ToolStripMenuItem
+            // 
+            this.合并蒙板图像ToolStripMenuItem.Name = "合并蒙板图像ToolStripMenuItem";
+            this.合并蒙板图像ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.合并蒙板图像ToolStripMenuItem.Text = "合并蒙板图像";
+            this.合并蒙板图像ToolStripMenuItem.ToolTipText = "在当前拖入的所有图像资源中，搜索是否为导出蒙板图像，\r\n是则合并2张jpeg蒙板图像，为1张新的png图像";
+            this.合并蒙板图像ToolStripMenuItem.Click += new System.EventHandler(this.合并蒙板图像ToolStripMenuItem_Click);
+            // 
+            // 提取较小资源ToolStripMenuItem
+            // 
+            this.提取较小资源ToolStripMenuItem.Name = "提取较小资源ToolStripMenuItem";
+            this.提取较小资源ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.提取较小资源ToolStripMenuItem.Text = "提取较小资源";
+            this.提取较小资源ToolStripMenuItem.ToolTipText = "拖入所有（原图像 和 蒙板图像），自动对比二者的文件大小，\r\n复制较小的图像资源";
+            this.提取较小资源ToolStripMenuItem.Click += new System.EventHandler(this.提取较小资源ToolStripMenuItem_Click);
             // 
             // pictureBox
             // 
@@ -200,81 +270,11 @@
             this.导出16进制颜色值ToolStripMenuItem.ToolTipText = "导出当前图像的所有像素值，为16进制ARGB串";
             this.导出16进制颜色值ToolStripMenuItem.Click += new System.EventHandler(this.导出16进制颜色值ToolStripMenuItem_Click);
             // 
-            // listBox
-            // 
-            this.listBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.listBox.ContextMenuStrip = this.contextMenuStrip2;
-            this.listBox.FormattingEnabled = true;
-            this.listBox.ItemHeight = 12;
-            this.listBox.Location = new System.Drawing.Point(400, 0);
-            this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(120, 400);
-            this.listBox.TabIndex = 86;
-            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.全部导出蒙板ToolStripMenuItem,
-            this.左上尺寸裁切ToolStripMenuItem,
-            this.最适尺寸裁切ToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.合并蒙板图像ToolStripMenuItem,
-            this.提取较小资源ToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(153, 142);
-            // 
-            // 全部导出蒙板ToolStripMenuItem
-            // 
-            this.全部导出蒙板ToolStripMenuItem.Name = "全部导出蒙板ToolStripMenuItem";
-            this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.全部导出蒙板ToolStripMenuItem.Text = "全部导出蒙板";
-            this.全部导出蒙板ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行导出蒙板操作";
-            this.全部导出蒙板ToolStripMenuItem.Click += new System.EventHandler(this.全部导出蒙板ToolStripMenuItem_Click);
-            // 
-            // 左上尺寸裁切ToolStripMenuItem
-            // 
-            this.左上尺寸裁切ToolStripMenuItem.Name = "左上尺寸裁切ToolStripMenuItem";
-            this.左上尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.左上尺寸裁切ToolStripMenuItem.Text = "左上尺寸裁切";
-            this.左上尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行左上尺寸裁切";
-            this.左上尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.左上尺寸裁切ToolStripMenuItem_Click);
-            // 
-            // 最适尺寸裁切ToolStripMenuItem
-            // 
-            this.最适尺寸裁切ToolStripMenuItem.Name = "最适尺寸裁切ToolStripMenuItem";
-            this.最适尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.最适尺寸裁切ToolStripMenuItem.Text = "最适尺寸裁切";
-            this.最适尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行最适寸裁切";
-            this.最适尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.最适尺寸裁切ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
-            // 
-            // 合并蒙板图像ToolStripMenuItem
-            // 
-            this.合并蒙板图像ToolStripMenuItem.Name = "合并蒙板图像ToolStripMenuItem";
-            this.合并蒙板图像ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.合并蒙板图像ToolStripMenuItem.Text = "合并蒙板图像";
-            this.合并蒙板图像ToolStripMenuItem.ToolTipText = "在当前拖入的所有图像资源中，搜索是否为导出蒙板图像，\r\n是则合并2张jpeg蒙板图像，为1张新的png图像";
-            this.合并蒙板图像ToolStripMenuItem.Click += new System.EventHandler(this.合并蒙板图像ToolStripMenuItem_Click);
-            // 
-            // 提取较小资源ToolStripMenuItem
-            // 
-            this.提取较小资源ToolStripMenuItem.Name = "提取较小资源ToolStripMenuItem";
-            this.提取较小资源ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.提取较小资源ToolStripMenuItem.Text = "提取较小资源";
-            this.提取较小资源ToolStripMenuItem.ToolTipText = "自动对比当前拖入的所有图像资源中的 （蒙板图像 和 原图像）的大小，\r\n复制二者中较小的资源";
-            this.提取较小资源ToolStripMenuItem.Click += new System.EventHandler(this.提取较小资源ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(520, 400);
-            this.Controls.Add(this.listBox);
             this.Controls.Add(this.panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -283,9 +283,9 @@
             this.Text = " ";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -294,7 +294,6 @@
 
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.PictureBox pictureBox;
-        private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 导出遮罩图像ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 添加蒙板ToolStripMenuItem;
@@ -316,6 +315,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem 合并蒙板图像ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 提取较小资源ToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBox;
     }
 }
 
