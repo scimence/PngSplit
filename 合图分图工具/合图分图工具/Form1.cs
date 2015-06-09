@@ -480,5 +480,19 @@ namespace PngSplit
             return new List<string>[]{ list, list_1 };
         }
 
+        private void 导出两倍尺寸ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String Dir = "";
+            foreach (string file in picFiles)
+            {
+                Image pic = Bitmap.FromFile(file);
+                string name = System.IO.Path.GetFileName(file);
+                pic = F.shrinkTo(pic, 2);
+                Dir = F.SaveToDirectory(pic, name, "两倍尺寸图像");
+            }
+
+            F.MessageWithOpen("成功导出两倍尺寸图像", Dir);
+        }
+
     }
 }
