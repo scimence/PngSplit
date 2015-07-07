@@ -40,8 +40,6 @@ namespace PngSplit
         //对拖入的文件进行相应的处理
         private void updatePics(string filesNames)
         {
-            picFiles = filesNames.Split(';');   //分割为所有的文件名
-
             //以蒙板的形式添加图像
             if (添加蒙板ToolStripMenuItem.Checked)
             {
@@ -52,6 +50,8 @@ namespace PngSplit
                     this.Text = ToolName + "使用蒙板处理图像中...";
 
                     Image pic = buildsPics(index);             //待添加蒙板的图像
+                    picFiles = filesNames.Split(';');          //分割为所有的文件名
+
                     Image mask = Bitmap.FromFile(picFiles[0]); //蒙板图像
 
                     picTmp = F.setPicMask(pic, mask);          //添加蒙板到图像上
@@ -66,6 +66,8 @@ namespace PngSplit
             //添加图像到列表中
             else
             {
+                picFiles = filesNames.Split(';');   //分割为所有的文件名
+
                 //获取拖入的建筑块信息
                 buildsPicsName = new string[picFiles.Length];
 
@@ -492,6 +494,16 @@ namespace PngSplit
             }
 
             F.MessageWithOpen("成功导出两倍尺寸图像", Dir);
+        }
+
+        private void 尺寸缩放ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int index = listBox.SelectedIndex;
+            Form2.imge = buildsPics(index);
+            
+            Form form = new Form2();
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.ShowDialog();
         }
 
     }

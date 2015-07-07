@@ -39,6 +39,8 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.合并蒙板图像ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.提取较小资源ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.导出两倍尺寸ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.导出所有子图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +56,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.导出10进制颜色值ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导出16进制颜色值ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.导出两倍尺寸ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.尺寸缩放ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -98,12 +100,12 @@
             this.toolStripSeparator5,
             this.导出两倍尺寸ToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(153, 170);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 148);
             // 
             // 全部导出蒙板ToolStripMenuItem
             // 
             this.全部导出蒙板ToolStripMenuItem.Name = "全部导出蒙板ToolStripMenuItem";
-            this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.全部导出蒙板ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.全部导出蒙板ToolStripMenuItem.Text = "全部导出蒙板";
             this.全部导出蒙板ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行导出蒙板操作";
             this.全部导出蒙板ToolStripMenuItem.Click += new System.EventHandler(this.全部导出蒙板ToolStripMenuItem_Click);
@@ -111,7 +113,7 @@
             // 左上尺寸裁切ToolStripMenuItem
             // 
             this.左上尺寸裁切ToolStripMenuItem.Name = "左上尺寸裁切ToolStripMenuItem";
-            this.左上尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.左上尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.左上尺寸裁切ToolStripMenuItem.Text = "左上尺寸裁切";
             this.左上尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行左上尺寸裁切";
             this.左上尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.左上尺寸裁切ToolStripMenuItem_Click);
@@ -119,7 +121,7 @@
             // 最适尺寸裁切ToolStripMenuItem
             // 
             this.最适尺寸裁切ToolStripMenuItem.Name = "最适尺寸裁切ToolStripMenuItem";
-            this.最适尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.最适尺寸裁切ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.最适尺寸裁切ToolStripMenuItem.Text = "最适尺寸裁切";
             this.最适尺寸裁切ToolStripMenuItem.ToolTipText = "对当前拖入的所有图像，执行最适寸裁切";
             this.最适尺寸裁切ToolStripMenuItem.Click += new System.EventHandler(this.最适尺寸裁切ToolStripMenuItem_Click);
@@ -127,12 +129,12 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
             // 
             // 合并蒙板图像ToolStripMenuItem
             // 
             this.合并蒙板图像ToolStripMenuItem.Name = "合并蒙板图像ToolStripMenuItem";
-            this.合并蒙板图像ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.合并蒙板图像ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.合并蒙板图像ToolStripMenuItem.Text = "合并蒙板图像";
             this.合并蒙板图像ToolStripMenuItem.ToolTipText = "在当前拖入的所有图像资源中，搜索是否为导出蒙板图像，\r\n是则合并2张jpeg蒙板图像，为1张新的png图像";
             this.合并蒙板图像ToolStripMenuItem.Click += new System.EventHandler(this.合并蒙板图像ToolStripMenuItem_Click);
@@ -140,14 +142,27 @@
             // 提取较小资源ToolStripMenuItem
             // 
             this.提取较小资源ToolStripMenuItem.Name = "提取较小资源ToolStripMenuItem";
-            this.提取较小资源ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.提取较小资源ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.提取较小资源ToolStripMenuItem.Text = "提取较小资源";
             this.提取较小资源ToolStripMenuItem.ToolTipText = "拖入所有（原图像 和 蒙板图像），自动对比二者的文件大小，\r\n复制较小的图像资源";
             this.提取较小资源ToolStripMenuItem.Click += new System.EventHandler(this.提取较小资源ToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(145, 6);
+            // 
+            // 导出两倍尺寸ToolStripMenuItem
+            // 
+            this.导出两倍尺寸ToolStripMenuItem.Name = "导出两倍尺寸ToolStripMenuItem";
+            this.导出两倍尺寸ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.导出两倍尺寸ToolStripMenuItem.Text = "导出两倍尺寸";
+            this.导出两倍尺寸ToolStripMenuItem.Click += new System.EventHandler(this.导出两倍尺寸ToolStripMenuItem_Click);
+            // 
             // pictureBox
             // 
             this.pictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox.BackgroundImage = global::PngSplit.Properties.Resources.TransBg;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox.Image = global::PngSplit.Properties.Resources.PngSplit_help2;
@@ -174,9 +189,11 @@
             this.最适尺寸裁剪ToolStripMenuItem,
             this.toolStripSeparator3,
             this.导出10进制颜色值ToolStripMenuItem,
-            this.导出16进制颜色值ToolStripMenuItem});
+            this.导出16进制颜色值ToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.尺寸缩放ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 242);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 292);
             // 
             // 导出所有子图ToolStripMenuItem
             // 
@@ -274,17 +291,17 @@
             this.导出16进制颜色值ToolStripMenuItem.ToolTipText = "导出当前图像的所有像素值，为16进制ARGB串";
             this.导出16进制颜色值ToolStripMenuItem.Click += new System.EventHandler(this.导出16进制颜色值ToolStripMenuItem_Click);
             // 
-            // toolStripSeparator5
+            // toolStripSeparator6
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(171, 6);
             // 
-            // 导出两倍尺寸ToolStripMenuItem
+            // 尺寸缩放ToolStripMenuItem
             // 
-            this.导出两倍尺寸ToolStripMenuItem.Name = "导出两倍尺寸ToolStripMenuItem";
-            this.导出两倍尺寸ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.导出两倍尺寸ToolStripMenuItem.Text = "导出两倍尺寸";
-            this.导出两倍尺寸ToolStripMenuItem.Click += new System.EventHandler(this.导出两倍尺寸ToolStripMenuItem_Click);
+            this.尺寸缩放ToolStripMenuItem.Name = "尺寸缩放ToolStripMenuItem";
+            this.尺寸缩放ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.尺寸缩放ToolStripMenuItem.Text = "尺寸缩放";
+            this.尺寸缩放ToolStripMenuItem.Click += new System.EventHandler(this.尺寸缩放ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -334,6 +351,8 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem 导出两倍尺寸ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem 尺寸缩放ToolStripMenuItem;
     }
 }
 
