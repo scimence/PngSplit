@@ -130,10 +130,8 @@ namespace PngSplit
                 string str = I.ToString();
 
                 System.IO.FileInfo info = new System.IO.FileInfo(str);
-                if ((info.Attributes & System.IO.FileAttributes.Directory) != 0)
-
                 //若为目录，则获取目录下所有子文件名
-                //if (System.IO.Directory.Exists(str))
+                if ((info.Attributes & System.IO.FileAttributes.Directory) != 0)
                 {
                     str = getAllFiles(str);
                     if (!str.Equals("")) filesName.Append((filesName.Length == 0 ? "" : ";") + str);
@@ -226,7 +224,7 @@ namespace PngSplit
             else if (Ext.Equals(".jpg") || Ext.Equals(".jpeg")) format = ImageFormat.Jpeg;
             else if (Ext.Equals(".bmp")) format = ImageFormat.Bmp;
             else if (Ext.Equals(".gif")) format = ImageFormat.Gif;
-            else if (Ext.Equals(".icon")) format = ImageFormat.Icon;
+            else if (Ext.Equals(".ico")) format = ImageFormat.Icon;
             else if (Ext.Equals(".emf")) format = ImageFormat.Emf;
             else if (Ext.Equals(".exif")) format = ImageFormat.Exif;
             else if (Ext.Equals(".tiff")) format = ImageFormat.Tiff;
@@ -234,6 +232,21 @@ namespace PngSplit
             else if (Ext.Equals(".memorybmp")) format = ImageFormat.MemoryBmp;
 
             return format;
+        }
+
+        /// <summary>
+        /// 保存icon到文件 subDir + name
+        /// </summary>
+        public string SaveToDirectory(Icon icon, string name, string subDir)
+        {
+            string CurDir = getCurDir(subDir) + name;
+
+            System.IO.Stream stream = new System.IO.FileStream(CurDir, System.IO.FileMode.Create);
+            icon.Save(stream);
+            stream.Flush();
+            stream.Close();
+
+            return CurDir;
         }
 
         //保存图像pic到子目录subDir中，保存名称为name
@@ -419,6 +432,33 @@ namespace PngSplit
         }
 
         /// <summary>
+        /// 按指定尺寸对图像pic进行非拉伸缩放
+        /// </summary>
+        public Bitmap shrinkTo(Image pic, Size S, Boolean cutting)
+        {
+            //创建图像
+            Bitmap tmp = new Bitmap(S.Width, S.Height);     //按指定大小创建位图
+
+            //绘制
+            Graphics g = Graphics.FromImage(tmp);           //从位图创建Graphics对象
+            g.Clear(Color.FromArgb(0, 0, 0, 0));            //清空
+
+            Boolean mode = (float)pic.Width / S.Width > (float)pic.Height / S.Height;   //zoom缩放
+            if (cutting) mode = !mode;                      //裁切缩放
+
+            //计算Zoom绘制区域             
+            if (mode)
+                S.Height = (int)((float)pic.Height * S.Width / pic.Width);
+            else
+                S.Width = (int)((float)pic.Width * S.Height / pic.Height);
+            Point P = new Point((tmp.Width - S.Width) / 2, (tmp.Height - S.Height) / 2);
+
+            g.DrawImage(pic,new Rectangle(P, S));
+
+            return tmp;     //返回构建的新图像
+        }
+
+        /// <summary>
         /// 对图像pic进行缩放，缩放比例reSize
         /// </summary>
         public Bitmap shrinkTo(Image pic, float reSize)
@@ -460,6 +500,15 @@ namespace PngSplit
             g.DrawImage(pic, Rect, Rect, GraphicsUnit.Pixel);       //从pic的给定区域进行绘制
 
             return tmp;     //返回构建的新图像
+        }
+
+        /// <summary>
+        /// 转化图像pic为Icon
+        /// </summary>
+        public Icon ToIcon(Bitmap pic)
+        {
+            Icon icon = Icon.FromHandle(pic.GetHicon());
+            return icon;
         }
 
         private Rectangle getClipRect(Image pic, float angle)

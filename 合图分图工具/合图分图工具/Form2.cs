@@ -12,10 +12,12 @@ namespace PngSplit
     public partial class Form2 : Form
     {
         private int picWH = 1;          //记录初始时PicBox的尺寸
-        public static int Mode = 1;     //图像缩放模式 1、最适缩放 2、满屏缩放
         public static Image imge;       //待缩放的图像
         public static Size size;        //图像缩放后的尺寸
-        public static float scale = 1;  //在size的基础上放大的倍数
+        private Boolean loading = false;//标识当前是否处于载入状态
+        public static string fileName;  //图像名称
+
+        ToolsFunction F = new ToolsFunction();  //图像处理相关函数工具
 
         public Form2()
         {
@@ -24,10 +26,8 @@ namespace PngSplit
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            loading = true;
             picWH = panel1.Width;
-
-            if (Mode == 1) radioButton1.Checked = true;
-            else radioButton2.Checked = true;
 
             //根据图像大小设置初始尺寸
             if (imge != null)
@@ -41,6 +41,9 @@ namespace PngSplit
             LinkLabel.Visible = checkBox1.Checked;
 
             showSeeting();
+
+            loading = false;
+            restSize();
         }
 
         //显示设置信息
@@ -48,7 +51,6 @@ namespace PngSplit
         {
             textBox1.Text = size.Width.ToString();
             textBox2.Text = size.Height.ToString();
-            textBox3.Text = scale.ToString();
         }
 
         //长宽比例约束
@@ -75,8 +77,8 @@ namespace PngSplit
                     textBox2.Text = size.Height.ToString();
                 }
                 size.Width = n;
+                restSize();
             }
-            restSize();
         }
 
         //高度变动
@@ -91,69 +93,65 @@ namespace PngSplit
                     textBox1.Text = size.Width.ToString();
                 }
                 size.Height = n;
+                restSize();
             }
-            restSize();
         }
 
+        //根据宽高值，设置pictureBox1尺寸
         private void restSize()
         {
+            if (loading) return;
+
             int w = size.Width, h = size.Height;
 
-            if (Mode == 1)
+            if (w > h)
             {
-                if (w > h)
-                {
-                    h = h * picWH / w;
-                    w = picWH;
-                }
-                else
-                {
-                    w = w * picWH / h;
-                    h = picWH;
-                }
+                h = h * picWH / w;
+                w = picWH;
             }
-            //else if (Mode == 2)
-            //{
-            //    if ((w < h))
-            //    {
-            //        h = h * picWH / w;
-            //        w = picWH;
-            //    }
-            //    else
-            //    {
-            //        w = w * picWH / h;
-            //        h = picWH;
-            //    }
-            //}
-
-
-            if (Mode == 1)
+            else
             {
-                pictureBox1.Width = w;
-                pictureBox1.Height = h;
+                w = w * picWH / h;
+                h = picWH;
             }
+
+            pictureBox1.Width = w;
+            pictureBox1.Height = h;
 
             pictureBox1.Left = (picWH - w) / 2;
             pictureBox1.Top = (picWH - h) / 2;
         }
 
-        //缩放倍数变动
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private Bitmap getPic()
         {
-            float n = parse(textBox3.Text);
-            if (n >= 0) textBox3.Text = n.ToString();
+            return F.shrinkTo(imge, size, checkBox2.Checked);
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            Mode = 1;
-            restSize();
+            string name = fileName + "_" + size.Width + "x" + size.Height + ".png";
+            String Dir = F.SaveToDirectory(getPic(), name, "图像缩放");
+            F.MessageWithOpen("成功导出图像", Dir + name);
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Mode = 2;
-            restSize();
+            string name = fileName + "_" + size.Width + "x" + size.Height + ".jpg";
+            String Dir = F.SaveToDirectory(getPic(), name, "图像缩放");
+            F.MessageWithOpen("成功导出图像", Dir + name);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Bitmap pic = getPic();      //获取图像
+            Icon icon = F.ToIcon(pic);  //转化为Icon
+
+            //保存Icon
+            string name = fileName + "_" + size.Width + "x" + size.Height + ".ico";
+
+            //string curDir = F.SaveToDirectory(pic, name, "图像缩放");
+            string curDir = F.SaveToDirectory(icon, name, "图像缩放");
+            F.MessageWithOpen("成功导出icon图像", curDir);
         }
     }
 }

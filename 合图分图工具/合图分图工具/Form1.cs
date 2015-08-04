@@ -500,6 +500,7 @@ namespace PngSplit
         {
             int index = listBox.SelectedIndex;
             Form2.imge = buildsPics(index);
+            Form2.fileName = System.IO.Path.GetFileNameWithoutExtension(buildsPicsName[index]);
             
             Form form = new Form2();
             form.StartPosition = FormStartPosition.CenterParent;
