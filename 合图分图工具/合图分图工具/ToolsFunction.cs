@@ -640,8 +640,16 @@ namespace PngSplit
         public void clearRect(bool[][] Colors, Rectangle Rect)
         {
             for (int i = Rect.Top; i <= Rect.Bottom; i++)
-                for (int j = Rect.Left; j <= Rect.Right; j++)
+            for (int j = Rect.Left; j <= Rect.Right; j++) {
+                if (i >= Colors.Length) {
+                    continue;
+                }
+                if (j >= Colors[i].Length) {
+                    continue;
+                }
                     Colors[i][j] = false;
+                }
+                   
         }
 
     }
