@@ -1,0 +1,11 @@
+﻿服务器资源目录(https://gitee.com/scimence/PngSplit/raw/master/)
+本地资源目录(E:\tmp\PngSplit\)
+
+待更新文件(
+
+LICENSE(f43a887881ab1be356cdfdf60a8102b)
+PngSplit.exe(5ddadb5911feb183fa51827d797f30e0)
+README.url(b76858cfb07124e7f50de2644f563f6e)
+files/PngSplit_2018.7z.zip(38d06f07bd0c727b016420b27d5246d0)
+
+)待更新文件
