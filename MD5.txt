@@ -4,8 +4,9 @@
 待更新文件(
 
 LICENSE(f43a887881ab1be356cdfdf60a8102b)
-PngSplit.exe(5ddadb5911feb183fa51827d797f30e0)
+PngSplit.exe(539145b8dfa7ce2f091dd51c25edc6d2)
 README.url(b76858cfb07124e7f50de2644f563f6e)
 files/PngSplit_2018.7z.zip(38d06f07bd0c727b016420b27d5246d0)
+files/PngSplit_2018_18.03.7z.zip(3d6c53b9232148517bb20eea755e55cf)
 
 )待更新文件
