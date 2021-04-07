@@ -7,7 +7,6 @@ LICENSE(3a1e95e7ced2cb7ec1b5369288b2f07b)
 PngSplit.exe(3a0f3c94ab9842f772aed19759ecc841)
 README.url(c6da962c454bf8bff32f2e9db1014f16)
 files/PngSplit_2018.7z.zip(38d06f07bd0c727b016420b27d5246d0)
-files/PngSplit_2018_18.03.7z(910ef3e932aaed2d1d0d989286659607)
 files/PngSplit_2018_18.03.7z.zip(3d6c53b9232148517bb20eea755e55cf)
 files/PngSplit_2020_04.07.7z.zip(7d3ba36297e1c215f9c762065b3af3f2)
 
