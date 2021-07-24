@@ -9,5 +9,7 @@ README.url(c6da962c454bf8bff32f2e9db1014f16)
 files/PngSplit_2018.7z.zip(38d06f07bd0c727b016420b27d5246d0)
 files/PngSplit_2018_18.03.7z.zip(3d6c53b9232148517bb20eea755e55cf)
 files/PngSplit_2020_04.07.7z.zip(7d3ba36297e1c215f9c762065b3af3f2)
+files/PngSplit_2020_05.20.7z.zip(ed6c61678b9f22f460491fc6ff385cf6)
+files/PngSplit_2021_07.24.7z.zip(fcfed968358a44bcf7236e41d05a413e)
 
 )待更新文件
