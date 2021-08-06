@@ -11,5 +11,6 @@ files/PngSplit_2018_18.03.7z.zip(3d6c53b9232148517bb20eea755e55cf)
 files/PngSplit_2020_04.07.7z.zip(7d3ba36297e1c215f9c762065b3af3f2)
 files/PngSplit_2020_05.20.7z.zip(ed6c61678b9f22f460491fc6ff385cf6)
 files/PngSplit_2021_07.24.7z.zip(fcfed968358a44bcf7236e41d05a413e)
+files/PngSplit_2021_08.06.7z.zip(a53cfff69bf22dcc35be7b0542972d5f)
 
 )待更新文件
